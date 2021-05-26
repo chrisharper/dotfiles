@@ -1,4 +1,7 @@
 #!/bin/sh
+
+source $HOME/.bashrc
+
 {{ if eq .chezmoi.osRelease.id "fedora" }}
   grep -qF 'fastestmirror=1' /etc/dnf/dnf.conf || echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
   grep -qF 'max_parallel_downloads=10' /etc/dnf/dnf.conf || echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
