@@ -1,0 +1,46 @@
+#!/bin/bash
+{{ if eq .chezmoi.osRelease.id "fedora" }}
+  echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
+  echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
+
+  gpg --recv 0xd9edd5b426073912 
+  echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
+
+
+
+
+  sudo dnf install -y \
+  "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
+  "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
+
+  sudo dnf install -y \
+    dmenu \
+    ffmpeg \
+    firefox \
+    fzf \
+    git \
+    igt-gpu-tools  \
+    intel-media-driver \
+    libglvnd-gles \
+    libX11-devel \
+    libXft-devel \
+    libXinerama-devel \
+    mesa-dri-drivers \
+    neovim \
+    pass \
+    pipewire \
+    pulseaudio-utils \
+    xorg-x11-xinit \
+    xorg-x11-server-Xorg \
+    xset \
+    xsetroot 
+
+  sudo dnf group install -y \
+    'Fonts' \
+    'Development Tools'
+
+
+  systemctl --user enable pipewire.socket pipewire-pulse.socket
+
+  sudo systemctl enable fstrim.timer
+{{ end -}}
