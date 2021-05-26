@@ -44,6 +44,33 @@
   sudo systemctl enable fstrim.timer
 
 
-  sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  if [ ! -f "$HOME/.local/share/nvim/site/autoload/plug.vim" ]
+  then 
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  fi
+
+  if [ ! -d "$HOME/dev/dwm" ]
+  then 
+    git clone ssh://git@github.com/chrisharper/dwm $HOME/dev/dwm
+    cd $HOME/dev/dwm
+    make
+    make install
+    make clean
+  fi
+
+  if [ ! -d "$HOME/dev/st" ]
+  then 
+    git clone ssh://git@github.com/chrisharper/st $HOME/dev/st
+    cd $HOME/dev/st
+    make
+    make install
+    make clean
+  fi
+
+  if [ ! -d "$HOME/.password-store" ]
+  then 
+    git clone ssh://git@github.com/chrisharper/password-store $HOME/.password-store
+  fi
+
 {{ end -}}
