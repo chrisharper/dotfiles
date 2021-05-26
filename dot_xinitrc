@@ -1,0 +1,16 @@
+# Statusbar loop
+while true; do
+   xsetroot -name "$( date +"%c" )" #date/time top right
+   sleep 15                         #update every 15s
+done &
+
+xsetroot -solid '#272727' #BG colour
+setxkbmap gb              #keymap
+xset -dpms                #kill energy saving
+xset s off                #disable screensaver
+
+
+
+while true ; do
+  dwm >/dev/null 2>&1 #allow reloading
+done
