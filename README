@@ -1,4 +1,4 @@
-sh -c "$(curl -fsLS git.io/chezmoi) -b ~/.local/bin" -- init --apply chrisharper
+sh -c "$(curl -fsLS git.io/chezmoi) -b ~/.local/bin -- init --apply chrisharper"
 
 
 media.ffmpeg.vaapi.enabled to true
