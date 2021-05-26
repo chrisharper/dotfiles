@@ -76,4 +76,12 @@ source $HOME/.bashrc
     git clone ssh://git@github.com/chrisharper/password-store $HOME/.password-store
   fi
 
+ if [ -f $HOME/README ] 
+ then
+   rm $HOME/README
+ fi
+ 
+ cd $HOME/.local/share/chezmoi
+ git remote set-url origin ssh://git@github.com/chrisharper/dotfiles 
+
 {{ end -}}
