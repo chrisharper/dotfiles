@@ -1,12 +1,11 @@
 #!/bin/sh
 {{ if eq .chezmoi.osRelease.id "fedora" }}
-  echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
-  echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
+  grep -qF 'fastestmirror=1' /etc/dnf/dnf.conf || echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
+  grep -qF 'max_parallel_downloads=10' /etc/dnf/dnf.conf || echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
+
 
   gpg --recv 0xd9edd5b426073912 
   echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
-
-
 
 
   sudo dnf install -y \
