@@ -42,9 +42,9 @@ source $HOME/.bashrc
     'Development Tools'
 
 
-  systemctl --user enable pipewire.socket pipewire-pulse.socket
+  systemctl --user --now enable pipewire.socket pipewire-pulse.socket
 
-  sudo systemctl enable fstrim.timer
+  sudo systemctl enable --now fstrim.timer
 
 
   if [ ! -f "$HOME/.local/share/nvim/site/autoload/plug.vim" ]
