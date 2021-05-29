@@ -48,6 +48,8 @@ source $HOME/.bashrc
 
   sudo systemctl enable --now fstrim.timer
 
+  sudo authselect select sssd with-pam-u2f-2fa without-nullok
+
 
   if [ ! -f "$HOME/.local/share/nvim/site/autoload/plug.vim" ]
   then 
