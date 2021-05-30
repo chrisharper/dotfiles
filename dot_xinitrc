@@ -1,7 +1,19 @@
 # Statusbar loop
 while true; do
-   xsetroot -name "$( date +"%c" )" #date/time top right
-   sleep 15                         #update every 15s
+status="YubiKey: "
+gpg --card-status > /dev/null 2>&1
+
+if [ $? -eq 0 ];
+then
+  status+="Connected"
+else
+  status+="Disconnected"
+fi
+
+status+=" | $( date +"%c" )"
+
+xsetroot -name "$status"
+sleep 1
 done &
 
 xsetroot -solid '#272727' #BG colour
