@@ -1,16 +1,7 @@
 # Statusbar loop
 while true; do
-status="YubiKey: "
-gpg --card-status > /dev/null 2>&1
 
-if [ $? -eq 0 ];
-then
-  status+="Connected"
-else
-  status+="Disconnected"
-fi
-
-status+=" | $( date +"%c" )"
+status=" $( date +"%c" )"
 
 xsetroot -name "$status"
 sleep 1
