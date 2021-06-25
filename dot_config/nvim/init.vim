@@ -9,6 +9,7 @@ Plug 'lilydjwg/colorizer'
 Plug 'liuchengxu/vim-which-key'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 
