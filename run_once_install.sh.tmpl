@@ -16,7 +16,9 @@ echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
   sudo dnf install -y \
     ffmpeg \
     pass \
-    fzf 
+    fzf \ 
+    tmux \ 
+    neovim
  
   sudo dnf group install -y \
     'Fonts' \
