@@ -1,0 +1,7 @@
+[merge]
+    command = "nvim"
+    args = "-d"
+
+[diff]
+    command = "nvim"
+    args = "-d"
