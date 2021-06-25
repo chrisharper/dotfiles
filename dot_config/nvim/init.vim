@@ -1,15 +1,15 @@
 call plug#begin()
-Plug 'morhetz/gruvbox' 
-Plug 'junegunn/fzf'    
-Plug 'junegunn/fzf.vim'
-Plug 'itchyny/lightline.vim'
-Plug 'mhinz/vim-signify'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'lilydjwg/colorizer'
-Plug 'liuchengxu/vim-which-key'
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'
-Plug 'christoomey/vim-tmux-navigator'
+Plug 'morhetz/gruvbox'                                " colourscheme 
+Plug 'junegunn/fzf'                                   " fuzzy file fider
+Plug 'junegunn/fzf.vim'                               
+Plug 'itchyny/lightline.vim'                          " bottom status bar
+Plug 'mhinz/vim-signify'                              " git side +/- symbol
+Plug 'neoclide/coc.nvim', {'branch': 'release'}       " LSP
+Plug 'lilydjwg/colorizer'                             " hexcode to colours
+Plug 'liuchengxu/vim-which-key'                       " keymap display
+Plug 'tpope/vim-fugitive'                             " git helper functions
+Plug 'junegunn/gv.vim'                                " git commit browser
+Plug 'christoomey/vim-tmux-navigator'                 " vim/tmux integration
 call plug#end()
 
 
