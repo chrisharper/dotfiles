@@ -64,6 +64,8 @@ echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
     fi
 
     systemctl --user --now enable pipewire.socket pipewire-pulse.socket
+  else
+    dconf load /org/gnome/terminal/legacy/profiles:/ < ~/.local/share/chezmoi/profile.dconf 
   fi
 
 
