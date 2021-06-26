@@ -9,10 +9,15 @@ echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
 
   sudo pacman -Syu reflector 
 
-  sudo reflector --country 'United Kingdom' --sort rate --save /etc/pacman.d/mirrorlist
-  grep -qF 'ParallelDownloads = 10' /etc/pacman.conf || echo 'ParallelDownloads = 10' | sudo tee -a /etc/pacman.conf
+  sudo reflector --country 'United Kingdom' --sort rate --protocol http \
+    --protocol https --save /etc/pacman.d/mirrorlist
+ 
+  sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 10/' /etc/pacman.conf
 
   sudo pacman -Syu \
+    man \
+    base-devel \
+    openssh \
     ffmpeg \
     pass \
     fzf \
@@ -38,13 +43,15 @@ echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
     noto-fonts-cjk \
     noto-fonts-emoji \
     noto-fonts-extra \
+    ccid \
+    pcsc-tools \
     pcsclite 
 
 
   systemctl --user --now enable pipewire.service pipewire-pulse.service
   sudo systemctl --now enable pcscd.service
 
-{{ end - }}
+{{ end -}}
 
 {{ if eq .chezmoi.osRelease.id "fedora" }}
   grep -qF 'fastestmirror=1' /etc/dnf/dnf.conf || echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
