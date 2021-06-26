@@ -5,7 +5,6 @@ Plug 'junegunn/fzf'                                   " fuzzy file fider
 Plug 'junegunn/fzf.vim'                               
 Plug 'itchyny/lightline.vim'                          " bottom status bar
 Plug 'mhinz/vim-signify'                              " git side +/- symbol
-Plug 'neoclide/coc.nvim', {'branch': 'release'}       " LSP
 Plug 'lilydjwg/colorizer'                             " hexcode to colours
 Plug 'liuchengxu/vim-which-key'                       " keymap display
 Plug 'tpope/vim-fugitive'                             " git helper functions
@@ -13,7 +12,6 @@ Plug 'junegunn/gv.vim'                                " git commit browser
 Plug 'christoomey/vim-tmux-navigator'                 " vim/tmux integration
 Plug 'easymotion/vim-easymotion'                      " quicker vim motions
 call plug#end()
-
 
 let g:mapleader= "\<Space>"
 
@@ -75,19 +73,11 @@ nnoremap <M-k>    :resize +2<CR>
 nnoremap <M-h>    :vertical resize -2<CR>
 nnoremap <M-l>    :vertical resize +2<CR>
 
-" Better window navigation
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
 " vim-which-key.vim
 nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
 
 " nerdtree
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
 
 " Start NERDTree when Vim starts with a directory argument.
 autocmd StdinReadPre * let s:std_in=1
@@ -110,19 +100,17 @@ let g:signify_sign_add               = '+'
 let g:signify_sign_delete            = '_'
 let g:signify_sign_delete_first_line = '‾'
 let g:signify_sign_change            = '~'
+let g:signify_sign_show_count = 0
+let g:signify_sign_show_text = 1
 
 " vim-easymotion
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 nmap s <Plug>(easymotion-overwin-f)
 let g:EasyMotion_smartcase = 1
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-
-" I find the numbers distracting
-let g:signify_sign_show_count = 0
-let g:signify_sign_show_text = 1
+ 
+" gv.vim
+map <leader>gv :GV<CR> " Git commit history
 
 " Indent tabs as 4 spaces in python
 autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
 
-source $HOME/.config/nvim/coc.vim
