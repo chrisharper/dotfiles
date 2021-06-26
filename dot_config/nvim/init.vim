@@ -1,5 +1,6 @@
 call plug#begin()
 Plug 'morhetz/gruvbox'                                " colourscheme 
+Plug 'preservim/nerdtree'                             " file exporer
 Plug 'junegunn/fzf'                                   " fuzzy file fider
 Plug 'junegunn/fzf.vim'                               
 Plug 'itchyny/lightline.vim'                          " bottom status bar
@@ -10,6 +11,7 @@ Plug 'liuchengxu/vim-which-key'                       " keymap display
 Plug 'tpope/vim-fugitive'                             " git helper functions
 Plug 'junegunn/gv.vim'                                " git commit browser
 Plug 'christoomey/vim-tmux-navigator'                 " vim/tmux integration
+Plug 'easymotion/vim-easymotion'                      " quicker vim motions
 call plug#end()
 
 
@@ -82,6 +84,20 @@ nnoremap <C-l> <C-w>l
 " vim-which-key.vim
 nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
 
+" nerdtree
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+
+" Start NERDTree when Vim starts with a directory argument.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
+    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
+
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
+
 " fzf.vim
 map <C-f> :Files<CR>
 map <leader>b :Buffers<CR>
@@ -95,7 +111,14 @@ let g:signify_sign_delete            = '_'
 let g:signify_sign_delete_first_line = '‾'
 let g:signify_sign_change            = '~'
 
-" I find the numbers disctracting
+" vim-easymotion
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+nmap s <Plug>(easymotion-overwin-f)
+let g:EasyMotion_smartcase = 1
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
+" I find the numbers distracting
 let g:signify_sign_show_count = 0
 let g:signify_sign_show_text = 1
 
