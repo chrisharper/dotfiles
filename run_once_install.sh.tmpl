@@ -52,6 +52,7 @@ echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
   
   systemctl --user --now enable pipewire.service pipewire-pulse.service
   sudo systemctl --now enable pcscd.service
+  sudo ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
   
   if [ ! -f /etc/systemd/zram-generator.conf ]
   then
