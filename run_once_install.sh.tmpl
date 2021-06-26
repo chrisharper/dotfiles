@@ -5,6 +5,45 @@ source $HOME/.bashrc
 gpg --recv 0xd9edd5b426073912 
 echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
 
+{{ if eq .chezmoi.osRelease.id "arch" }}
+
+  sudo pacman -Syu reflector 
+
+  sudo reflector --country 'United Kingdom' --sort rate --save /etc/pacman.d/mirrorlist
+  grep -qF 'ParallelDownloads = 10' /etc/pacman.conf || echo 'ParallelDownloads = 10' | sudo tee -a /etc/pacman.conf
+
+  sudo pacman -Syu \
+    ffmpeg \
+    pass \
+    fzf \
+    tmux \
+    neovim \
+    dmenu \
+    firefox \
+    git \
+    intel-gpu-tools  \
+    intel-media-driver \
+    libglvnd \
+    libx11 \
+    libxft \
+    libxinerama \
+    pipewire \
+    pipewire-pulse \
+    xorg-xinit \
+    xorg-server \
+    xorg-xset \
+    xorg-xsetroot \
+    ttf-dejavu \
+    noto-fonts \
+    noto-fonts-cjk \
+    noto-fonts-emoji \
+    noto-fonts-extra 
+
+
+  systemctl --user --now enable pipewire.service pipewire-pulse.service
+
+{{ end - }}
+
 {{ if eq .chezmoi.osRelease.id "fedora" }}
   grep -qF 'fastestmirror=1' /etc/dnf/dnf.conf || echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
   grep -qF 'max_parallel_downloads=10' /etc/dnf/dnf.conf || echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
@@ -41,35 +80,33 @@ echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
     xset \
     xsetroot 
 
- 
-  if [ ! -d "$HOME/dev/dwm" ]
-  then 
-    git clone ssh://git@github.com/chrisharper/dwm $HOME/dev/dwm
-    cd $HOME/dev/dwm
-    make
-    make install
-    make clean
-  fi
-
-  if [ ! -d "$HOME/dev/st" ]
-  then 
-    git clone ssh://git@github.com/chrisharper/st $HOME/dev/st
-    cd $HOME/dev/st
-    make
-    make install
-    make clean
-  fi
-
-  sudo systemctl enable --now fstrim.timer
   systemctl --user --now enable pipewire.socket pipewire-pulse.socket
-
-
 {{ end -}}
+ 
+if [ ! -d "$HOME/dev/dwm" ]
+then 
+  git clone ssh://git@github.com/chrisharper/dwm $HOME/dev/dwm
+  cd $HOME/dev/dwm
+  make
+  make install
+  make clean
+fi
+
+if [ ! -d "$HOME/dev/st" ]
+then 
+  git clone ssh://git@github.com/chrisharper/st $HOME/dev/st
+  cd $HOME/dev/st
+  make
+  make install
+  make clean
+fi
+
+sudo systemctl enable --now fstrim.timer
 
 if [ ! -f "$HOME/.local/share/nvim/site/autoload/plug.vim" ]
 then 
   sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 fi
 
 if [ ! -d "$HOME/.password-store" ]
