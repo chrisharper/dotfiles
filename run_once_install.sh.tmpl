@@ -9,8 +9,8 @@ echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
 
   sudo pacman -Syu reflector 
 
-  sudo reflector --country 'United Kingdom' --sort rate --protocol http \
-    --protocol https --save /etc/pacman.d/mirrorlist
+  sudo reflector --country 'United Kingdom,Germany,France' --sort rate --protocol https,http \
+    --latest 50 --save /etc/pacman.d/mirrorlist
  
   sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 10/' /etc/pacman.conf
 
