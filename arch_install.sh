@@ -44,6 +44,7 @@ pacstrap /mnt base linux linux-firmware iwd zram-generator grub efibootmgr sudo 
 echo "Install: genfstab"
 genfstab -U /mnt >> /mnt/etc/fstab
 
+
 echo "Install: place second install script"
 cat << EOF > /mnt/root/install.sh
 
@@ -72,6 +73,7 @@ hwclock --systohc
 
 echo "Install: set locales"
 sed -i 's/#en_GB.UTF-8 UTF-8/en_GB.UTF-8 UTF-8/' /etc/locale.gen
+sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
 echo 'LANG=en_GB.UTF-8' >> /etc/locale.conf
 echo 'KEYMAP=uk' >> /etc/vconsole.conf
@@ -101,8 +103,14 @@ echo "Install: permit wheel group access to sudo"
 sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 
 echo "Install: snapper config"
-snapper -c root create-config /
-
+umount .snapshots
+rm -rf .snapshots
+snapper --no-dbus -c root create-config /
+btrfs sub delete /.snapshots
+mkdir .snapshots
+chmod 750 .snapshots
+mount .snapshots
+snapper --no-dbus -c root create --description 'Initial Install'
 EOF
 
 echo "Install: remove /etc/resolv.conf before chroot to allow symlink"
