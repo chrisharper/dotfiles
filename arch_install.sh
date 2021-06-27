@@ -17,7 +17,20 @@ mkfs.btrfs -f /dev/sda2
 
 echo "Install: mounting"
 mount -o compress=zstd,noatime,discard=async /dev/sda2 /mnt
-mkdir -p /mnt/boot/efi
+btrfs sub cr /mnt/@
+btrfs sub cr /mnt/@tmp
+btrfs sub cr /mnt/@home
+btrfs sub cr /mnt/@var_log
+btrfs sub cr /mnt/@snapshots
+umount /mnt
+
+mount -o compress=zstd,noatime,discard=async,subvol=@ /dev/sda2 /mnt
+mkdir -p /mnt/{tmp,home,var/log,boot/efi,.snapshots}
+mount -o compress=zstd,noatime,discard=async,subvol=@tmp /dev/sda2 /mnt/tmp
+mount -o compress=zstd,noatime,discard=async,subvol=@home /dev/sda2 /mnt/home
+mount -o compress=zstd,noatime,discard=async,subvol=@var_log /dev/sda2 /mnt/var/log
+mount -o compress=zstd,noatime,discard=async,subvol=@snapshots /dev/sda2 /mnt/.snapshots
+
 mount /dev/sda1 /mnt/boot/efi
 
 echo "Install: reflector"
@@ -25,7 +38,8 @@ reflector --latest 100 --sort rate --protocol https,https \
   --country 'France,Germany,United Kingdom' --save /etc/pacman.d/mirrorlist
 
 echo "Install: pacstrap"
-pacstrap /mnt base linux linux-firmware iwd zram-generator grub efibootmgr sudo intel-ucode
+pacstrap /mnt base linux linux-firmware iwd zram-generator grub efibootmgr sudo \
+  intel-ucode grub-btrfs btrfs-progs snapper snap-pac
 
 echo "Install: genfstab"
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -35,6 +49,9 @@ cat << EOF > /mnt/root/install.sh
 
 echo "Install: enable iwd.service"
 systemctl enable --now iwd.service
+
+echo "Install: enable grub-btrfs"
+systemctl enable --now grub-btrfs.path
 
 echo "Install: enable systemd-resolved.service"
 systemctl enable --now systemd-resolved.service
@@ -82,6 +99,9 @@ passwd -d charper
 
 echo "Install: permit wheel group access to sudo"
 sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+
+echo "Install: snapper config"
+snapper -c root create-config /
 
 EOF
 
