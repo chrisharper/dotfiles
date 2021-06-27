@@ -40,8 +40,7 @@ echo "Install: enable systemd-resolved.service"
 systemctl enable --now systemd-resolved.service
 
 echo "Install: symlink /etc/resolv.conf"
-rm /etc/resolv.conf
-ln -s /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+ln -s /var/run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
 echo "Install: enable IWD DHCP"
 mkdir /etc/iwd
@@ -85,6 +84,9 @@ echo "Install: permit wheel group access to sudo"
 sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 
 EOF
+
+echo "Install: remove /etc/resolv.conf before chroot to allow symlink"
+rm /mnt/etc/resolv.conf
 
 echo "Install: arch-chroot"
 arch-chroot /mnt sh /root/install.sh
