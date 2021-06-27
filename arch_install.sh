@@ -111,6 +111,17 @@ mkdir .snapshots
 chmod 750 .snapshots
 mount .snapshots
 snapper --no-dbus -c root create --description 'Initial Install'
+
+systemctl enable --now snapper-timeline.timer
+systemctl enable --now snapper-cleanup.timer
+
+echo "Install: btrfs scrub"
+systemctl enable btrfs-scrub@-.timer
+systemctl enable btrfs-scrub@tmp.timer
+systemctl enable btrfs-scrub@home.timer
+systemctl enable btrfs-scrub@var-log.timer
+systemctl enable btrfs-scrub@\x2esnapshots.timer
+
 EOF
 
 echo "Install: remove /etc/resolv.conf before chroot to allow symlink"
