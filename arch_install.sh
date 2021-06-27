@@ -20,6 +20,8 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt
 
+systemctl enable --now iwd.service
+
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc
 
@@ -41,6 +43,9 @@ grub-mkconfig  -o /boot/grub/grub.cfg
 useradd -m -G wheel charper
 echo 'password' | passwd charper 
 
+
+su charper
+cd /home/charper
 sh -c "$(curl -fsLS git.io/chezmoi) -b ~/.local/bin -- init --apply chrisharper"
 
 
