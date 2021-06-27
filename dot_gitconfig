@@ -3,3 +3,5 @@
 	name = Chris Harper
 [push]
     default = simple
+[commit]
+	verbose = true
