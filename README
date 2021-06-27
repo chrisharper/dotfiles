@@ -1,8 +1,5 @@
 sh -c "$(curl -fsLS git.io/chezmoi) -b ~/.local/bin -- init --apply chrisharper"
 
-Arch 
-iwd during install 
-
 media.ffmpeg.vaapi.enabled to true
 media.ffvpx.enabled to false
 media.rdd-vpx.enabled to false

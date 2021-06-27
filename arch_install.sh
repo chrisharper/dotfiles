@@ -37,7 +37,7 @@ echo "Install: enable iwd.service"
 systemctl enable --now iwd.service
 
 echo "Install: enable IWD DHCP"
-	tee /etc/iwd/main.conf << END > /dev/null
+	tee /etc/iwd/main.conf <<- END > /dev/null
 	[General]
 	EnableNetworkConfiguration=true
 	END
@@ -83,6 +83,9 @@ passwd -d charper
 echo "Install: permit wheel group access to sudo"
 sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 
+echo "Install: chezmoi"
+
+sudo -u charper sh -c "$(curl -fsLS git.io/chezmoi) -b ~/.local/bin -- init --apply chrisharper"
 EOF
 
 echo "Install: arch-chroot"

@@ -86,6 +86,7 @@ echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
     xsetroot 
 
   systemctl --user --now enable pipewire.socket pipewire-pulse.socket
+  sudo systemctl enable --now fstrim.timer
 {{ end -}}
  
 if [ ! -d "$HOME/dev/dwm" ]
@@ -105,8 +106,6 @@ then
   make install
   make clean
 fi
-
-sudo systemctl enable --now fstrim.timer
 
 if [ ! -f "$HOME/.local/share/nvim/site/autoload/plug.vim" ]
 then 
