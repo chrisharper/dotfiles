@@ -7,11 +7,6 @@ echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
 
 {{ if eq .chezmoi.osRelease.id "arch" }}
 
-  sudo pacman -Syu reflector 
-
-  sudo reflector --country 'United Kingdom,Germany,France' --sort rate --protocol https,http \
-    --latest 50 --save /etc/pacman.d/mirrorlist
- 
   sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 10/' /etc/pacman.conf
 
   sudo pacman -Syu \
@@ -48,20 +43,10 @@ echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
     pcsclite \
     bash-completion \
     zram-generator 
-
   
   systemctl --user --now enable pipewire.service pipewire-pulse.service
   sudo systemctl --now enable pcscd.service
-  sudo ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
   
-  if [ ! -f /etc/systemd/zram-generator.conf ]
-  then
-    sudo tee /etc/systemd/zram-generator.conf <<- EOF > /dev/null
-		[zram0]
-		max-zram-size = 8192
-		EOF
-  fi
-
 {{ end -}}
 
 {{ if eq .chezmoi.osRelease.id "fedora" }}
