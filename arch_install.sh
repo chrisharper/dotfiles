@@ -36,18 +36,19 @@ cat << EOF > /mnt/root/install.sh
 echo "Install: enable iwd.service"
 systemctl enable --now iwd.service
 
-echo "Install: enable IWD DHCP"
-	tee /etc/iwd/main.conf <<- END > /dev/null
-	[General]
-	EnableNetworkConfiguration=true
-	END
-
-echo "Install: enable systemd-resolved.service
+echo "Install: enable systemd-resolved.service"
 systemctl enable --now systemd-resolved.service
 
 echo "Install: symlink /etc/resolv.conf"
 rm /etc/resolv.conf
 ln -s /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+echo "Install: enable IWD DHCP"
+mkdir /etc/iwd
+	tee /etc/iwd/main.conf <<- END > /dev/null
+	[General]
+	EnableNetworkConfiguration=true
+	END
 
 echo "Install: enable timezone"
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
@@ -83,9 +84,6 @@ passwd -d charper
 echo "Install: permit wheel group access to sudo"
 sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 
-echo "Install: chezmoi"
-
-sudo -u charper sh -c "$(curl -fsLS git.io/chezmoi) -b ~/.local/bin -- init --apply chrisharper"
 EOF
 
 echo "Install: arch-chroot"
