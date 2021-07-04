@@ -1,19 +1,16 @@
 call plug#begin()
 Plug 'morhetz/gruvbox'                                " colourscheme 
-Plug 'preservim/nerdtree'                             " file exporer
+Plug 'preservim/nerdtree'                             " file explorer
 Plug 'junegunn/fzf'                                   " fuzzy file fider
 Plug 'junegunn/fzf.vim'                               
 Plug 'itchyny/lightline.vim'                          " bottom status bar
 Plug 'mhinz/vim-signify'                              " git side +/- symbol
 Plug 'lilydjwg/colorizer'                             " hexcode to colours
-Plug 'liuchengxu/vim-which-key'                       " keymap display
 Plug 'tpope/vim-fugitive'                             " git helper functions
 Plug 'junegunn/gv.vim'                                " git commit browser
 Plug 'christoomey/vim-tmux-navigator'                 " vim/tmux integration
 Plug 'easymotion/vim-easymotion'                      " quicker vim motions
 call plug#end()
-
-let g:mapleader= "\<Space>"
 
 syntax enable                           " Enables syntax highlighing
 set hidden                              " Required to keep multiple buffers open multiple buffers
@@ -52,8 +49,8 @@ set list lcs=space:·,tab:->             " Set spaces to dots and tabs to arrows
 set list!                               " Dont show by default 
 set cc=80                               " Line 80 ruler
 
-nnoremap <leader>l :set list!<CR>       " toggle showing whitespaces chars with leader-l
 au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vm alternatively you can run :source $MYVIMRC
+let g:mapleader= "\<Space>"
 
 colorscheme gruvbox
 let g:lightline = {
@@ -67,18 +64,6 @@ let g:lightline = {
       \ },
       \ }
 
-" Use alt + hjkl to resize windows
-nnoremap <M-j>    :resize -2<CR>
-nnoremap <M-k>    :resize +2<CR>
-nnoremap <M-h>    :vertical resize -2<CR>
-nnoremap <M-l>    :vertical resize +2<CR>
-
-" vim-which-key.vim
-nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-
-" nerdtree
-nnoremap <leader>n :NERDTreeToggle<CR>
-
 " Start NERDTree when Vim starts with a directory argument.
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
@@ -88,12 +73,12 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
     \ quit | endif
 
-" fzf.vim
-map <C-f> :Files<CR>
-map <leader>b :Buffers<CR>
-nnoremap <leader>g :Rg<CR>
-nnoremap <leader>t :Tags<CR>
-nnoremap <leader>m :Marks<CR>
+" vim-easymotion
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_smartcase = 1
+
+" colorizer
+let g:colorizer_nomap = 1 "disable bindings
 
 " vim-signify
 let g:signify_sign_add               = '+'
@@ -103,14 +88,24 @@ let g:signify_sign_change            = '~'
 let g:signify_sign_show_count = 0
 let g:signify_sign_show_text = 1
 
-" vim-easymotion
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-nmap s <Plug>(easymotion-overwin-f)
-let g:EasyMotion_smartcase = 1
- 
-" gv.vim
-map <leader>gv :GV<CR> " Git commit history
-
-" Indent tabs as 4 spaces in python
+" Indent tab as 4 spaces in python
 autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
+
+map <Leader>f :Files<CR>
+map <Leader>w :set list!<CR>
+map <Leader>n :NERDTreeToggle<CR>
+map <leader>s :<Plug>(easymotion-overwin-f2)<CR>
+map <leader>gv :GV<CR>
+map <leader>t :tabnew<CR>
+map <leader>tn :tabnext<CR>
+map <leader>tm :tabmove<CR>
+map <leader>tc :tabclose<CR>
+map <leader>to :tabonly<CR>
+
+" Use alt + hjkl to resize windows
+nnoremap <M-j>    :resize -2<CR>
+nnoremap <M-k>    :resize +2<CR>
+nnoremap <M-l>    :vertical resize -2<CR>
+nnoremap <M-h>    :vertical resize +2<CR>
+
 
