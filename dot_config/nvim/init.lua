@@ -3,6 +3,13 @@ local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
 local g = vim.g      -- a table to access global variables
 local opt = vim.opt  -- to seDTreeToggle
 local api  = vim.api
+local execute = vim.api.nvim_command
+
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+  fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
+  execute 'packadd packer.nvim'
+end
 
 local function map(mode, lhs, rhs, opts)
   local options = {noremap = true}
@@ -10,24 +17,24 @@ local function map(mode, lhs, rhs, opts)
   api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
-require "paq" {
-  "savq/paq-nvim";                                  -- plugin manager
-  "morhetz/gruvbox";                                -- colourscheme 
-  "preservim/nerdtree";                             -- file explorer
-  "junegunn/fzf";                                   -- fuzzy file fider
-  "junegunn/fzf.vim";                               
-  "itchyny/lightline.vim";                          -- bottom status bar
-  "mhinz/vim-signify";                              -- git side +/- symbol
-  "lilydjwg/colorizer";                             -- hexcode to colours
-  "tpope/vim-fugitive";                             -- git helper functions
-  "junegunn/gv.vim";                                -- git commit browser
-  "christoomey/vim-tmux-navigator";                 -- vim/tmux integration
-  "easymotion/vim-easymotion";                      -- quicker vim motions
-  "nvim-treesitter/nvim-treesitter";                -- syntax
-}
+require ('packer').startup(function()
+  use "wbthomason/packer.nvim";                                  -- plugin manager
+  use "gruvbox-community/gruvbox";                                -- colourscheme 
+  use "nvim-treesitter/nvim-treesitter";                -- syntax
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'},{'nvim-telescope/telescope-fzy-native.nvim'}}
+  }
+
+  use {
+    'hrsh7th/nvim-compe',
+    requires = {{'neovim/nvim-lspconfig','kabouzeid/nvim-lspinstall'}}
+  }
+end)
+
 local indent, width = 2, 80
 opt.colorcolumn = tostring(width)  -- Line 80 ruler
-opt.completeopt = {'menuone', 'noinsert', 'noselect'}  -- Completion options
+opt.completeopt = {'menuone', 'noselect'}  -- Completion options
 opt.cursorline = true               -- Highlight cursor line
 opt.expandtab = true                -- Use spaces instead of tabs
 opt.hidden = true                   -- Enable background buffers
@@ -37,9 +44,11 @@ opt.list = true                     -- Show some invisible characters
 opt.number = true                   -- Show line numbers
 opt.relativenumber = true           -- Relative line numbers
 opt.scrolloff = 4                   -- Lines of context
+opt.shell= 'bash --login'
 opt.shiftround = true               -- Round indent
 opt.shiftwidth = indent                  -- Size of an indent
 opt.sidescrolloff = 8               -- Columns of context
+opt.signcolumn = 'yes'
 opt.smartcase = true                -- Do not ignore case with capitals
 opt.smartindent = true              -- Insert indents automatically
 opt.splitbelow = true               -- Put new windows below current
@@ -50,64 +59,121 @@ opt.textwidth = width               -- Maximum width of text
 opt.wildmode = {'list', 'longest'}  -- Command-line completion mode
 opt.wrap = false                    -- Disable line wrap
 
-
 cmd 'colorscheme gruvbox'
 
 g.mapleader = ' '
-g.lightline = {
-       ['colorscheme'] = 'gruvbox' ,
-       ['active'] = {
-         ['left'] = { { 'mode', 'paste' } ,{ 'gitbranch', 'readonly', 'filename', 'modified' } }
-       },
-       ['component_function'] = {
-         ['gitbranch'] = 'FugitiveHead'
-       },
-}
 
 require('nvim-treesitter.configs').setup {
   ensure_installed = 'maintained',
   highlight = {enable = true},
 }
 
--- vim-easymotion
-g.EasyMotion_do_mapping = 0
-g.EasyMotion_smartcase = 1
 
--- colorizer
-g.colorizer_nomap = 1 
-
--- vim-signify
-g.signify_sign_add               = '+'
-g.signify_sign_delete            = '_'
-g.signify_sign_delete_first_line = '‾'
-g.signify_sign_change            = '~'
-g.signify_sign_show_count = 0
-g.ignify_sign_show_text = 1
-
--- Start NERDTree when Vim starts with a directory argument.
-cmd  "autocmd StdinReadPre * let s:std_in=1 "
-cmd  "autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0])  \z
-     && !exists('s:std_in') |execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif"
-
--- Exit Vim if NERDTree is the only window left.
-cmd  "autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |     quit | endif "
+require('telescope').setup {
+  defaults = {
+    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
+    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
+    file_sorter = require('telescope.sorters').get_fzy_sorter,
+  },
+  extensions = {
+    fzy_native = {
+      override_generic_sorter = false,
+      override_file_sorter = true,
+    }
+  }
+}
+require('telescope').load_extension('fzy_native')
 
 
 
+local function setup_servers()
+  require'lspinstall'.setup()
+  local servers = require'lspinstall'.installed_servers()
+  for _, server in pairs(servers) do
+    require'lspconfig'[server].setup{}
+  end
+end
 
-map('n','<leader>f',':Files<CR>')
-map('n','<leader>n',':NERDTreeToggle<CR>')
-map('n','<leader>gv',':GV<CR>')
-map('n','<leader>t',':tabnew<CR>')
-map('n','<leader>tn',':tabnext<CR>')
-map('n','<leader>tm',':tabmove<CR>')
-map('n','<leader>tc',':tabclose<CR>')
-map('n','<leader>to',':tabonly<CR>')
+setup_servers()
 
--- Use alt + hjkl to resize windows
-map('n','<M-j>',':resize -2<CR>')
-map('n','<M-k>',':resize +2<CR>')
-map('n','<M-l>',':vertical resize -2<CR>')
-map('n','<M-h>',':vertical resize +2<CR>')
+-- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+require'lspinstall'.post_install_hook = function ()
+  setup_servers() -- reload installed servers
+  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+end
+
+
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  resolve_timeout = 800;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = {
+    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
+    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+    max_width = 120,
+    min_width = 60,
+    max_height = math.floor(vim.o.lines * 0.3),
+    min_height = 1,
+  };
+
+  source = {
+    path = true;
+    buffer = true;
+    calc = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+    vsnip = true;
+    ultisnips = true;
+    luasnip = true;
+  };
+}
+-- See `:help vim.lsp.*` for documentation on any of the below functions    
+map('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>')
+map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
+map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>')
+map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+map('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+map('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
+map('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+map('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
+map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+map('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
+map("n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>")
+
+map('n','<leader>f',":Telescope find_files<cr>")
+-- Terminal bindings
+map('t','<Esc>','<C-\\><C-n>')
+
+map('n','<C-b>c',':tabnew +terminal<CR>')
+map('t','<C-b>c','<C-\\><C-n>:tabnew +terminal<CR>')
+
+map('n','<C-b>x',':tabclose <CR>')
+map('t','<C-b>x','<C-\\><C-n>:tabclose <CR>')
+
+map('n','<C-b>"',':new +terminal<CR>')
+map('t','<C-b>"','<C-\\><C-n>:new +terminal<CR>')
+
+map('n','<C-b>%',':vnew +terminal<CR>')
+map('t','<C-b>%','<C-\\><C-n>:vnew +terminal<CR>')
+
+cmd([[
+augroup neovim_terminal
+autocmd!
+autocmd TermOpen * startinsert
+autocmd TermOpen * :set nonumber norelativenumber
+augroup END
+]])
 
 
