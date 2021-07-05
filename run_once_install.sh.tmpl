@@ -106,12 +106,6 @@ then
   make clean
 fi
 
-if [ ! -d "$HOME/.local/share/nvim/site/pack/paqs/start/paq-nvim" ]
-then 
-  git clone --depth=1 https://github.com/savq/paq-nvim.git \
-      "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/paqs/start/paq-nvim
-fi
-
 if [ ! -d "$HOME/.password-store" ]
 then 
   git clone ssh://git@github.com/chrisharper/password-store $HOME/.password-store

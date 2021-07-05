@@ -21,12 +21,13 @@ gpgconf --launch gpg-agent
 gpg-connect-agent updatestartuptty /bye > /dev/null
 
 #neovim aliases and ENV vars
-export VISUAL=nvim
-export EDITOR=nvim
+export VISUAL=nvr
+export EDITOR=nvr
 
 #GPU acceleration
 export LIBVA_DRIVER_NAME=iHD
 export MOZ_X11_EGL=1
 
-alias vim='nvim'
+alias vim='nvr'
+alias nvim='nvr'
 alias ls='ls --color' 
