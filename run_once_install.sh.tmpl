@@ -16,7 +16,6 @@ echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
     ffmpeg \
     pass \
     fzf \
-    tmux \
     neovim \
     dmenu \
     firefox \
@@ -42,7 +41,8 @@ echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
     pcsc-tools \
     pcsclite \
     bash-completion \
-    zram-generator 
+    zram-generator \
+    python-pip
   
   systemctl --user --now enable pipewire.service pipewire-pulse.service
   sudo systemctl --now enable pcscd.service
@@ -66,7 +66,6 @@ echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
     ffmpeg \
     pass \
     fzf \
-    tmux \
     neovim \
     dmenu \
     firefox \
@@ -117,6 +116,8 @@ if [ ! -d "$HOME/.password-store" ]
 then 
   git clone ssh://git@github.com/chrisharper/password-store $HOME/.password-store
 fi
+
+pip3 install neovim-remote
 
 cd $HOME/.local/share/chezmoi
 git remote set-url origin ssh://git@github.com/chrisharper/dotfiles 
