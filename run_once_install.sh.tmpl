@@ -5,50 +5,6 @@ source $HOME/.bashrc
 gpg --recv 0xd9edd5b426073912 
 echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
 
-{{ if eq .chezmoi.osRelease.id "arch" }}
-
-  sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 10/' /etc/pacman.conf
-
-  sudo pacman -Syu \
-    man \
-    base-devel \
-    openssh \
-    ffmpeg \
-    pass \
-    fzf \
-    neovim \
-    dmenu \
-    firefox \
-    git \
-    intel-gpu-tools  \
-    intel-media-driver \
-    libglvnd \
-    libx11 \
-    libxft \
-    libxinerama \
-    pipewire \
-    pipewire-pulse \
-    xorg-xinit \
-    xorg-server \
-    xorg-xset \
-    xorg-xsetroot \
-    ttf-dejavu \
-    noto-fonts \
-    noto-fonts-cjk \
-    noto-fonts-emoji \
-    noto-fonts-extra \
-    ccid \
-    pcsc-tools \
-    pcsclite \
-    bash-completion \
-    zram-generator \
-    python-pip
-  
-  systemctl --user --now enable pipewire.service pipewire-pulse.service
-  sudo systemctl --now enable pcscd.service
-  
-{{ end -}}
-
 {{ if eq .chezmoi.osRelease.id "fedora" }}
   grep -qF 'fastestmirror=1' /etc/dnf/dnf.conf || echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
   grep -qF 'max_parallel_downloads=10' /etc/dnf/dnf.conf || echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
@@ -60,51 +16,16 @@ echo -e "5\ny\n" | gpg --command-fd 0 --edit-key 0xd9edd5b426073912 trust
   sudo dnf group install -y \
     'Fonts' \
     'Development Tools'
-  
 
   sudo dnf install -y \
     ffmpeg \
     pass \
     fzf \
     neovim \
-    dmenu \
     firefox \
-    git \
-    igt-gpu-tools  \
-    intel-media-driver \
-    libglvnd-gles \
-    libX11-devel \
-    libXft-devel \
-    libXinerama-devel \
-    mesa-dri-drivers \
-    pipewire \
-    pulseaudio-utils \
-    xorg-x11-xinit \
-    xorg-x11-server-Xorg \
-    xset \
-    xsetroot 
-
-  systemctl --user --now enable pipewire.socket pipewire-pulse.socket
-  sudo systemctl enable --now fstrim.timer
+    git 
 {{ end -}}
  
-if [ ! -d "$HOME/dev/dwm" ]
-then 
-  git clone ssh://git@github.com/chrisharper/dwm $HOME/dev/dwm
-  cd $HOME/dev/dwm
-  make
-  make install
-  make clean
-fi
-
-if [ ! -d "$HOME/dev/st" ]
-then 
-  git clone ssh://git@github.com/chrisharper/st $HOME/dev/st
-  cd $HOME/dev/st
-  make
-  make install
-  make clean
-fi
 
 if [ ! -d "$HOME/.password-store" ]
 then 
