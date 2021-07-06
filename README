@@ -1,9 +1,6 @@
 sh -c "$(curl -fsLS git.io/chezmoi) -b ~/.local/bin -- init --apply chrisharper"
 
-media.ffmpeg.vaapi.enabled to true
-media.ffvpx.enabled to false
-media.rdd-vpx.enabled to false
-media.navigator.mediadatadecoder_vpx_enabled to true
-gfx.webrender.all to true
+gpg --recv 0xd9edd5b426073912 
+gpg --edit-key 0xd9edd5b426073912 
 
-:PaqInstall
+:PackerInstall
