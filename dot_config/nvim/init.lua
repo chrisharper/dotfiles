@@ -173,9 +173,8 @@ augroup neovim_terminal
 autocmd!
 autocmd TermOpen * :set nonumber norelativenumber
 autocmd TermOpen * :startinsert
-autocmd BufEnter,BufNew term://* startinsert
 autocmd TermClose * bd!|q " 
 augroup END
 ]])
 
-autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
+cmd("autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete")

@@ -26,7 +26,7 @@ gpg-connect-agent updatestartuptty /bye > /dev/null
 nvr_cmd='nvr --remote-tab-wait-silent'
 export VISUAL=$nvr_cmd
 export EDITOR=$nvr_cmd
-
 alias vim=$nvr_cmd
 alias nvim=$nvr_cmd
+
 alias ls='ls --color' 
