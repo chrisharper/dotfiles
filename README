@@ -1,6 +1,11 @@
+
 sh -c "$(curl -fsLS git.io/chezmoi) -b ~/.local/bin -- init --apply chrisharper"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 gpg --recv 0xd9edd5b426073912 
 gpg --edit-key 0xd9edd5b426073912 
 
+cd ~/.local/share/chezmoi
+git remote set-url ssh://git@github.com/chrisharper/dotfiles
+brew bundle
 :PackerInstall
