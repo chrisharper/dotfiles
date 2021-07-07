@@ -23,7 +23,7 @@ gpgconf --launch gpg-agent
 gpg-connect-agent updatestartuptty /bye > /dev/null
 
 #neovim aliases and ENV vars
-nvr_cmd='nvr --remote-tab-wait-silent'
+nvr_cmd='nvr --remote-wait-silent'
 export VISUAL=$nvr_cmd
 export EDITOR=$nvr_cmd
 alias vim=$nvr_cmd
