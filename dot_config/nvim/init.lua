@@ -171,8 +171,11 @@ map('t','<C-b>%','<C-\\><C-n>:vnew +terminal<CR>')
 cmd([[
 augroup neovim_terminal
 autocmd!
-autocmd TermOpen * startinsert
+
 autocmd TermOpen * :set nonumber norelativenumber
+autocmd TermOpen * :startinsert
+autocmd BufEnter,BufNew term://* startinsert
+autocmd TermClose * bd!|q " 
 augroup END
 ]])
 
