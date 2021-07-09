@@ -1,0 +1,6 @@
+brew 'neovim'
+brew 'pass'
+
+{{- if ne .chezmoi.os "linux" }}
+  cask 'alacritty'
+{{- end }}

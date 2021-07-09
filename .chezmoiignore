@@ -1,5 +1,4 @@
 README
-Brewfile
 Brewfile.lock.json
 
 {{- if ne .chezmoi.os "linux" }}
