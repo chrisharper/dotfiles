@@ -72,7 +72,12 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git tmux gpg-agent)
 
+{{- if eq .chezmoi.os "linux" }}
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+{{ else if eq .chezmoi.is "darwin" }}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+{{ end -}}
+
 FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 
 source $ZSH/oh-my-zsh.sh
