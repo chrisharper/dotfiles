@@ -2,3 +2,6 @@ README
 Brewfile
 Brewfile.lock.json
 
+{{- if ne .chezmoi.os "linux" }}
+  .config/autostart/*
+{{- end }}

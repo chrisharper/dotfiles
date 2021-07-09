@@ -46,14 +46,14 @@ opt.relativenumber = true           -- Relative line numbers
 opt.scrolloff = 4                   -- Lines of context
 opt.shell= 'bash --login'
 opt.shiftround = true               -- Round indent
-opt.shiftwidth = indent                  -- Size of an indent
+opt.shiftwidth = indent             -- Size of an indent
 opt.sidescrolloff = 8               -- Columns of context
 opt.signcolumn = 'yes'
 opt.smartcase = true                -- Do not ignore case with capitals
 opt.smartindent = true              -- Insert indents automatically
 opt.splitbelow = true               -- Put new windows below current
 opt.splitright = true               -- Put new windows right of current
-opt.tabstop = indent                     -- Number of spaces tabs count for
+opt.tabstop = indent                 -- Number of spaces tabs count for
 opt.termguicolors = true            -- True color support
 opt.textwidth = width               -- Maximum width of text
 opt.wildmode = {'list', 'longest'}  -- Command-line completion mode
@@ -136,6 +136,9 @@ require'compe'.setup {
     luasnip = true;
   };
 }
+
+
+
 -- See `:help vim.lsp.*` for documentation on any of the below functions    
 map('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>')
 map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
@@ -153,27 +156,3 @@ map('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
 map("n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>")
 
 map('n','<leader>f',":Telescope find_files<cr>")
--- Terminal bindings
-map('t','<Esc>','<C-\\><C-n>')
-
-map('n','<C-b>c',':tabnew +terminal<CR>')
-map('t','<C-b>c','<C-\\><C-n>:tabnew +terminal<CR>')
-
-map('n','<C-b>x',':tabclose <CR>')
-map('t','<C-b>x','<C-\\><C-n>:tabclose <CR>')
-
-map('n','<C-b>"',':new +terminal<CR>')
-map('t','<C-b>"','<C-\\><C-n>:new +terminal<CR>')
-
-map('n','<C-b>%',':vnew +terminal<CR>')
-map('t','<C-b>%','<C-\\><C-n>:vnew +terminal<CR>')
-
-cmd([[
-augroup neovim_terminal
-autocmd!
-autocmd TermOpen * :set nonumber norelativenumber
-autocmd TermOpen * :startinsert
-autocmd TermClose * bd!|q " 
-augroup END
-]])
-
