@@ -155,4 +155,8 @@ map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
 map('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
 map("n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>")
 
-map('n','<leader>f',":Telescope find_files<cr>")
+
+map('n','<leader>ff',"<cmd>lua require('telescope.builtin').find_files() <cr>")
+map('n','<leader>fg',"<cmd>lua require('telescope.builtin').live_grep() <cr>")
+map('n','<leader>fb',"<cmd>lua require('telescope.builtin').buffers() <cr>")
+map('n','<leader>fG',"<cmd>lua require('telescope.builtin').git_commits() <cr>")
