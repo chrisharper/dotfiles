@@ -72,12 +72,15 @@ ZSH_THEME="simple"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git tmux gpg-agent zsh-completions zsh-syntax-highlighting )
 
+
 {{- if eq .chezmoi.os "linux" }}
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 {{ else if eq .chezmoi.is "darwin" }}
 eval "$(/opt/homebrew/bin/brew shellenv)"
 {{ end -}}
 
+
+source $(brew --prefix asdf)/asdf.sh
 FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 
 source $ZSH/oh-my-zsh.sh
