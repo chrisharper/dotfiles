@@ -28,4 +28,3 @@ vim.opt.wrap = false                    -- Disable line wrap
 vim.cmd 'colorscheme gruvbox'
 vim.g.mapleader = ' '
 
-
