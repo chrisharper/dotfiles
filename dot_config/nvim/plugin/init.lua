@@ -34,6 +34,18 @@ require ('packer').startup(function()
     'hrsh7th/nvim-compe',
     requires = {{'neovim/nvim-lspconfig','kabouzeid/nvim-lspinstall'}},
   }
+
+  -- git gutter line
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    },
+    config = function()
+      require('gitsigns').setup()
+    end
+  }
+
 end)
 
 
