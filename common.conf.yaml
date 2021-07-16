@@ -1,0 +1,10 @@
+
+- link:
+    ~/.oh-my-zsh : oh-my-zsh
+    ~/.oh-my-zsh/custom/plugins/zsh-completions : zsh-completions
+    ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting : zsh-syntax-highlighting 
+    ~/.zshrc : 
+      force: true
+      path: zshrc
+    ~/.gitconfig : git/config
+    

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
-
+COMMON_CONFIG="common"
 CONFIG_SUFFIX=".conf.yaml"
 DOTBOT_DIR="dotbot"
 
@@ -12,7 +12,7 @@ cd "${BASEDIR}"
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
-for conf in $(uname -s) ${@}; do
+for conf in $(uname -s) ${COMMON_CONFIG} ${@}; do
     echo ${conf}
     "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${conf}${CONFIG_SUFFIX}"
 done 
