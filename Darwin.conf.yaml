@@ -1,0 +1,8 @@
+- link:
+    ~/.ssh/config: ssh/osx_config
+    ~/.oh-my-zsh : oh-my-zsh
+    ~/.oh-my-zsh/custom/plugins/zsh-completions : zsh-completions
+    ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting : zsh-syntax-highlighting 
+    ~/.zshrc     : zshrc
+    ~/.gitconfig : git/config
+    
