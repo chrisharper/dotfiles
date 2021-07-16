@@ -7,4 +7,9 @@
       force: true
       path: zshrc
     ~/.gitconfig : git/config
+    ~/.tmux.conf : tmux.conf
+    ~/.config/nvim :
+      path:  nvim/
+      create: true
+      force: true
     

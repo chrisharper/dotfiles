@@ -44,8 +44,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/dev/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/home/dev/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/home/dev/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/home/dev/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/dev/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
+local package_path_str = "/Users/charper/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/Users/charper/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/Users/charper/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/Users/charper/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/Users/charper/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -72,47 +72,47 @@ _G.packer_plugins = {
   ["gitsigns.nvim"] = {
     config = { "\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0" },
     loaded = true,
-    path = "/home/dev/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
+    path = "/Users/charper/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
   },
   gruvbox = {
     loaded = true,
-    path = "/home/dev/.local/share/nvim/site/pack/packer/start/gruvbox"
+    path = "/Users/charper/.local/share/nvim/site/pack/packer/start/gruvbox"
   },
   ["nvim-compe"] = {
     loaded = true,
-    path = "/home/dev/.local/share/nvim/site/pack/packer/start/nvim-compe"
+    path = "/Users/charper/.local/share/nvim/site/pack/packer/start/nvim-compe"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
-    path = "/home/dev/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
+    path = "/Users/charper/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
   },
   ["nvim-lspinstall"] = {
     loaded = true,
-    path = "/home/dev/.local/share/nvim/site/pack/packer/start/nvim-lspinstall"
+    path = "/Users/charper/.local/share/nvim/site/pack/packer/start/nvim-lspinstall"
   },
   ["nvim-treesitter"] = {
     loaded = true,
-    path = "/home/dev/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
+    path = "/Users/charper/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
   },
   ["packer.nvim"] = {
     loaded = true,
-    path = "/home/dev/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    path = "/Users/charper/.local/share/nvim/site/pack/packer/start/packer.nvim"
   },
   ["plenary.nvim"] = {
     loaded = true,
-    path = "/home/dev/.local/share/nvim/site/pack/packer/start/plenary.nvim"
+    path = "/Users/charper/.local/share/nvim/site/pack/packer/start/plenary.nvim"
   },
   ["popup.nvim"] = {
     loaded = true,
-    path = "/home/dev/.local/share/nvim/site/pack/packer/start/popup.nvim"
+    path = "/Users/charper/.local/share/nvim/site/pack/packer/start/popup.nvim"
   },
   ["telescope-fzy-native.nvim"] = {
     loaded = true,
-    path = "/home/dev/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim"
+    path = "/Users/charper/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
-    path = "/home/dev/.local/share/nvim/site/pack/packer/start/telescope.nvim"
+    path = "/Users/charper/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   }
 }
 
