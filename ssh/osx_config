@@ -2,3 +2,10 @@ Host *
   AddKeysToAgent yes
   UseKeychain yes
   IdentityFile ~/.ssh/id_ed25519
+
+Host localhost
+  User dev
+  Port 2222
+  ForwardAgent yes
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
