@@ -1,5 +1,2 @@
 - link:
     ~/.ssh/config: ssh/osx_config
-    ~/.zprofile :
-        force: true
-        path: zprofile
