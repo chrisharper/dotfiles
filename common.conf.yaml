@@ -27,6 +27,3 @@
     ~/.gitconfig : 
       relink: true
       path: git/config
-    ~/.tmux.conf : 
-      relink: true
-      path: tmux.conf

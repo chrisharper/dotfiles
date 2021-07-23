@@ -7,3 +7,6 @@
       create: true
       force: true
       path:  nvim/
+    ~/.tmux.conf : 
+      relink: true
+      path: tmux.conf
