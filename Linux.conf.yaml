@@ -1,12 +1,12 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
 - link:
-    ~/.asdf: 
-      relink: true
-      path: asdf 
+    ~/.asdf: asdf 
     ~/.config/nvim :
-      relink: true
       create: true
       force: true
       path:  nvim/
-    ~/.tmux.conf : 
-      relink: true
-      path: tmux.conf
+    ~/.tmux.conf : tmux.conf
