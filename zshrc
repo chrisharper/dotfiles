@@ -81,7 +81,7 @@ case `uname` in
     ZSH_TMUX_AUTOSTART=true
   ;;
 esac
-plugins+=(vi-mode zsh-completions zsh-syntax-highlighting)
+plugins+=(vi-mode  zsh-autosuggestions zsh-completions zsh-syntax-highlighting)
 
 
 source $ZSH/oh-my-zsh.sh
