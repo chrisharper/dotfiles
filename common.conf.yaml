@@ -3,6 +3,8 @@
 
 - link:
     ~/.oh-my-zsh : oh-my-zsh
+    ~/.oh-my-zsh/custom/aliases.zsh : aliases.zsh
+    ~/.oh-my-zsh/custom/env.zsh : env.zsh
     ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions : zsh-autosuggestions
     ~/.oh-my-zsh/custom/plugins/zsh-completions : zsh-completions
     ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting : zsh-syntax-highlighting 
@@ -11,8 +13,3 @@
       path: zshrc
     ~/.gitconfig : git/config
     ~/.tmux.conf : tmux.conf
-    ~/.config/nvim :
-      path:  nvim/
-      create: true
-      force: true
-    

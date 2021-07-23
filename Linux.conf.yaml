@@ -1,0 +1,6 @@
+- link:
+    ~/.asdf: asdf 
+    ~/.config/nvim :
+      path:  nvim/
+      create: true
+      force: true
