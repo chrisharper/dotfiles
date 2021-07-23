@@ -1,6 +1,9 @@
 - link:
-    ~/.asdf: asdf 
+    ~/.asdf: 
+      relink: true
+      path: asdf 
     ~/.config/nvim :
-      path:  nvim/
+      relink: true
       create: true
       force: true
+      path:  nvim/

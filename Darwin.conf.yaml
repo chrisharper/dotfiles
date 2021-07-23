@@ -1,2 +1,4 @@
 - link:
-    ~/.ssh/config: ssh/osx_config
+    ~/.ssh/config : 
+      relink: true
+      path: ssh/osx_config

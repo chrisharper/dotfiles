@@ -2,14 +2,31 @@
     ~/:
 
 - link:
-    ~/.oh-my-zsh : zsh/oh-my-zsh
-    ~/.oh-my-zsh/custom/aliases.zsh : zsh/aliases.zsh
-    ~/.oh-my-zsh/custom/env.zsh : zsh/env.zsh
-    ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions : zsh/zsh-autosuggestions
-    ~/.oh-my-zsh/custom/plugins/zsh-completions : zsh/zsh-completions
-    ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting : zsh/zsh-syntax-highlighting 
+    ~/.oh-my-zsh : 
+      relink: true
+      path: zsh/oh-my-zsh
+    ~/.oh-my-zsh/custom/aliases.zsh : 
+      relink: true
+      path: zsh/aliases.zsh
+    ~/.oh-my-zsh/custom/env.zsh : 
+      relink: true
+      path: zsh/env.zsh
+    ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions : 
+      relink: true
+      path: zsh/zsh-autosuggestions
+    ~/.oh-my-zsh/custom/plugins/zsh-completions : 
+      relink: true
+      path: zsh/zsh-completions
+    ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting : 
+      relink: true
+      path: zsh/zsh-syntax-highlighting 
     ~/.zshrc : 
       force: true
+      relink: true
       path: zsh/zshrc
-    ~/.gitconfig : git/config
-    ~/.tmux.conf : tmux.conf
+    ~/.gitconfig : 
+      relink: true
+      path: git/config
+    ~/.tmux.conf : 
+      relink: true
+      path: tmux.conf
