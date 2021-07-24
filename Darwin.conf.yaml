@@ -1,4 +1,10 @@
-- link:
-    ~/.ssh/config : 
+- defaults:
+    link:
+      create: true
       relink: true
-      path: ssh/osx_config
+
+- link:
+    ~/.ssh/config : ssh/osx_config
+    ~/.config/kitty/kitty.conf : 
+        force : true
+        path : kitty.conf
