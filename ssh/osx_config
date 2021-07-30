@@ -18,3 +18,11 @@ Host fedora
   ForwardAgent yes
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
+
+Host arch
+  Hostname localhost
+  User dev
+  Port 4444 
+  ForwardAgent yes
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
