@@ -25,8 +25,8 @@ require ('packer').startup(function()
   }
 
   -- lsp 
-  use { "neovim/nvim-lspconfig" ,
-    requires = {{'kabouzeid/nvim-lspinstall'}},
+  use { 
+    "neovim/nvim-lspconfig" ,
   }
 
   -- completion
