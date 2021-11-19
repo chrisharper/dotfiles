@@ -16,9 +16,6 @@
     ~/.zshrc : 
       force: true
       path: zsh/zshrc
-    ~/.zprofile : 
-      force: true
-      path: zsh/zprofile
     ~/.gitconfig : git/config
     ~/.ssh/config : ssh/osx_config
     ~/.config/kitty/kitty.conf : 
