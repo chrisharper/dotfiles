@@ -1,0 +1,21 @@
+
+dmenu
+git
+libX11-devel
+libXft-devel
+libXinerama-devel
+neovim
+open-vm-tools
+open-vm-tools-desktop
+setxkbmap
+xsetroot
+xrandr
+xorg-x11-server-Xorg
+xorg-x11-xinit
+
+groupinstall 'Development Tools' 'Fonts'
+
+pull dwm+st - make install clean
+build nvim HEAD/6 
+clone packer + install
+

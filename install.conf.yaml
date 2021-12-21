@@ -1,26 +1,12 @@
 - clean:
     ~/:
 
-# seperate link directive as we link deeper and the ordering below is not known
 - link:
-    ~/.oh-my-zsh : zsh/oh-my-zsh
-
-- link:
-    ~/.oh-my-zsh/custom/aliases.zsh : zsh/aliases.zsh
-    ~/.oh-my-zsh/custom/env.zsh : zsh/env.zsh
-    ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions : zsh/zsh-autosuggestions
-    ~/.oh-my-zsh/custom/plugins/zsh-completions : zsh/zsh-completions
-    ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting : zsh/zsh-syntax-highlighting 
-    ~/.zshrc : 
-      force: true
-      path: zsh/zshrc
     ~/.gitconfig : git/config
-    ~/.ssh/config : ssh/osx_config
-    ~/.config/kitty/kitty.conf : 
-        force : true
-        path : kitty.conf
     ~/.config/nvim :
       create: true
       force: true
       path:  nvim/
     ~/.tmux.conf : tmux.conf
+    ~/.xinitrc : xinitrc
+    ~/.bashrc : bashrc
