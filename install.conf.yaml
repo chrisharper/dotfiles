@@ -19,7 +19,6 @@
     ~/.config/kitty/kitty.conf : 
         force : true
         path : kitty.conf
-    ~/.asdf: asdf 
     ~/.config/nvim :
       create: true
       force: true
