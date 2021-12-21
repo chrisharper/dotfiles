@@ -1,13 +1,11 @@
 - clean:
     ~/:
 
-- defaults:
-    link:
-      create: true
-      relink: true
-
+# seperate link directive as we link deeper and the ordering below is not known
 - link:
     ~/.oh-my-zsh : zsh/oh-my-zsh
+
+- link:
     ~/.oh-my-zsh/custom/aliases.zsh : zsh/aliases.zsh
     ~/.oh-my-zsh/custom/env.zsh : zsh/env.zsh
     ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions : zsh/zsh-autosuggestions
