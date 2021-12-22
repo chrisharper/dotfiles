@@ -7,6 +7,5 @@
       create: true
       force: true
       path:  nvim/
-    ~/.tmux.conf : tmux.conf
     ~/.xinitrc : xinitrc
     ~/.bashrc : bashrc
