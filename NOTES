@@ -4,7 +4,6 @@ git
 libX11-devel
 libXft-devel
 libXinerama-devel
-neovim
 open-vm-tools
 open-vm-tools-desktop
 setxkbmap
