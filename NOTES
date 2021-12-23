@@ -4,7 +4,6 @@ git
 libX11-devel
 libXft-devel
 libXinerama-devel
-open-vm-tools
 open-vm-tools-desktop
 setxkbmap
 xsetroot
@@ -14,7 +13,8 @@ xorg-x11-xinit
 
 groupinstall 'Development Tools' 'Fonts'
 
-pull dwm+st - make install clean
-build nvim HEAD/6 
-clone packer + install
+dotfiles -> ./install
+dwm/st -> make install clean
+nvim -> stable checkout 
+:PackerSync
 
