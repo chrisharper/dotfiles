@@ -1,6 +1,6 @@
 local indent, width = 2, 80
 vim.opt.colorcolumn = tostring(width)  -- Line 80 ruler
-vim.opt.completeopt = {'menuone', 'noselect'}  -- Completion options
+vim.opt.completeopt = {'menu', 'menuone', 'noselect'}  -- Completion options
 vim.opt.cursorline = true               -- Highlight cursor line
 vim.opt.expandtab = true                -- Use spaces instead of tabs
 vim.opt.hidden = true                   -- Enable background buffers

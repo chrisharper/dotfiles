@@ -4,6 +4,7 @@ git
 libX11-devel
 libXft-devel
 libXinerama-devel
+nodejs
 open-vm-tools-desktop
 setxkbmap
 xsetroot
@@ -17,4 +18,6 @@ dotfiles -> ./install
 dwm/st -> make install clean
 nvim -> stable checkout 
 :PackerSync
+rustup -> install
+rust-analyzer
 
