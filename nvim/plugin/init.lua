@@ -53,6 +53,11 @@ require ('packer').startup(function()
     end
   }
 
+  -- rust specific plugin
+  use {
+   'simrat39/rust-tools.nvim'
+  }
+
 end)
 
 
