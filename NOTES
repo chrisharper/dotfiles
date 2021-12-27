@@ -18,6 +18,6 @@ dotfiles -> ./install
 dwm/st -> make install clean
 nvim -> stable checkout 
 :PackerSync
-rustup -> install
-rust-analyzer
+rustup -> install 
+rustup +nightly component add rust-analyzer-preview
 

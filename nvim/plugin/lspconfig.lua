@@ -1,7 +1,9 @@
 require'lspconfig'.clangd.setup{}
 require'lspconfig'.bashls.setup{}
-require'lspconfig'.rust_analyzer.setup{}
 
+require"lspconfig".rust_analyzer.setup{
+    cmd = { "rustup", "run", "nightly", "rust-analyzer"},
+  }
 
 -- See `:help vim.lsp.*` for documentation on any of the below functions    
 vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true })
