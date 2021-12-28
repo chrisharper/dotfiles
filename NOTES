@@ -7,6 +7,7 @@ libXinerama-devel
 nodejs
 open-vm-tools-desktop
 setxkbmap
+tmux
 xsetroot
 xrandr
 xorg-x11-server-Xorg

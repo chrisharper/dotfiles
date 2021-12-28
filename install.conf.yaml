@@ -9,3 +9,4 @@
       path:  nvim/
     ~/.xinitrc : xinitrc
     ~/.bashrc : bashrc
+    ~/.tmux.conf : tmux.conf
