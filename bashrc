@@ -36,8 +36,10 @@ function switchres(){
   if [ $? -eq 0 ]
   then 
     xrandr -s 3840x2160
+    xrandr --dpi 157
   else
     xrandr -s 2560x1600
+    xrandr --dpi 227
   fi
 }
 
