@@ -2,13 +2,14 @@
     ~/:
 
 - link:
-    ~/.gitconfig : git/config
-    ~/.config/nvim :
-      create: true
-      force: true
-      path:  nvim/
-    ~/.tmux.conf : tmux.conf
     ~/.config/kitty :
       create: true
       force: true
       path: kitty/
+    ~/.config/nvim :
+      create: true
+      force: true
+      path:  nvim/
+    ~/.gitconfig : git/config
+    ~/.tmux.conf : tmux.conf
+    ~/.zprofile : zprofile
