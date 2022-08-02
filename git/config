@@ -5,3 +5,5 @@
     default = simple
 [commit]
 	verbose = true
+[core]
+	editor = nvim
