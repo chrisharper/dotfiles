@@ -209,6 +209,7 @@ require ('packer').startup(function()
   }
 
   use 'neovim/nvim-lspconfig'
+  use 'lukas-reineke/indent-blankline.nvim'
 
 end)
 
