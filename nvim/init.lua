@@ -184,6 +184,13 @@ require ('packer').startup(function()
     server = {
       capabilities = capabilities,
       on_attach = lsp_attach,
+      settings = {
+          ["rust-analyzer"] = {
+            checkOnSave = {
+              command = "clippy"
+          },
+        }
+      }
     }
   })
 
@@ -204,6 +211,7 @@ require ('packer').startup(function()
   use 'neovim/nvim-lspconfig'
 
 end)
+
 
 
 
