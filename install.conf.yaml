@@ -15,3 +15,8 @@
     ~/.gnupg/gpg.conf : gnupg/gpg.conf 
     ~/.tmux.conf : tmux.conf
     ~/.zprofile : zprofile
+    ~/.zshrc : zshrc
+    ~/.oh-my-zsh: 
+      create: true
+      force: true
+      path: ohmyzsh/
