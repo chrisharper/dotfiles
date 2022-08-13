@@ -6,6 +6,7 @@ brew 'neovim'
 brew 'gnupg'
 brew 'wget'
 brew 'pinentry-mac'
+brew 'lua-language-server' 
 
 cask 'kitty'
 cask 'font-sauce-code-pro-nerd-font'
