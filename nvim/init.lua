@@ -86,28 +86,12 @@ require('packer').startup(function()
     'hrsh7th/nvim-cmp',
     requires = { 'neovim/nvim-lspconfig', 'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-cmdline',
-      'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
+      'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip', "simrat39/rust-tools.nvim" },
 
     config = function()
       local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-      end
-
-
-      -- Add additional capabilities supported by nvim-cmp
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
-      local lspconfig = require('lspconfig')
-
-      -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-      local servers = { 'rust_analyzer', 'sumneko_lua' }
-      for _, lsp in ipairs(servers) do
-        lspconfig[lsp].setup {
-          -- on_attach = my_custom_on_attach,
-          capabilities = capabilities,
-        }
       end
 
       local luasnip = require("luasnip")
@@ -162,34 +146,6 @@ require('packer').startup(function()
         })
       })
 
-      -- Set configuration for specific filetype.
-      cmp.setup.filetype('gitcommit', {
-        sources = cmp.config.sources({
-          { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-        }, {
-          { name = 'buffer' },
-        })
-      })
-
-      -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline('/', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = 'buffer' }
-        }
-      })
-
-      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'path' }
-        }, {
-          { name = 'cmdline' }
-        })
-      })
-
-
     end
   }
 
@@ -203,9 +159,6 @@ require('packer').startup(function()
       require('gitsigns').setup()
     end
   }
-
-  -- LSP config
-  use 'neovim/nvim-lspconfig'
 
   -- 80 char line mark
   use 'lukas-reineke/indent-blankline.nvim'
@@ -238,22 +191,19 @@ vim.api.nvim_set_keymap("n", "<leader>fG", "<Cmd>lua require('telescope.builtin'
 vim.api.nvim_set_keymap("n", "<leader>t", ':NvimTreeToggle <CR>', { noremap = true })
 
 -- nvim-lspconfig
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+-- Setup buffer-local keymaps / options for LSP buffers
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local lsp_attach = function(client, buf)
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap = true, silent = true, buffer = bufnr }
+  local bufopts = { noremap = true, silent = true, buffer = buf }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -269,27 +219,30 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+
+  vim.api.nvim_buf_set_option(buf, "formatexpr", "v:lua.vim.lsp.formatexpr()")
+  vim.api.nvim_buf_set_option(buf, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  vim.api.nvim_buf_set_option(buf, "tagfunc", "v:lua.vim.lsp.tagfunc")
 end
 
-local lsp_flags = {
-  -- This is the default in Nvim 0.7+
-  debounce_text_changes = 150,
-}
-
-require('lspconfig')['rust_analyzer'].setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-  -- Server-specific settings...
-  settings = {
-    ["rust-analyzer"] = {
-      checkOnSave = {
-        enable = true,
-        command = "clippy",
+-- Setup rust_analyzer via rust-tools.nvim
+require("rust-tools").setup({
+  server = {
+    capabilities = capabilities,
+    on_attach = lsp_attach,
+    settings = {
+      ["rust-analyzer"] = {
+        checkOnSave = {
+          command = "clippy"
+        },
       }
     }
   }
-}
+})
+
 require 'lspconfig'.sumneko_lua.setup {
+  capabilities = capabilities,
+  on_attach = lsp_attach,
   settings = {
     Lua = {
       runtime = {
