@@ -219,6 +219,7 @@ require ('packer').startup(function()
       require('nvim-tree').setup()
     end
   }
+  use 'christoomey/vim-tmux-navigator'
 end)
 
 
@@ -272,5 +273,3 @@ end)
     -- This is the default in Nvim 0.7+
     debounce_text_changes = 150,
   }
-
-
