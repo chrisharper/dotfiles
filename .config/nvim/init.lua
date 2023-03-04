@@ -41,7 +41,13 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   -- git gutter line
+  {
   'lewis6991/gitsigns.nvim',
+  --this should be needed but here we are
+  config = function()
+    require('gitsigns').setup()
+  end
+  },
   -- 80 char line mark
   'lukas-reineke/indent-blankline.nvim',
   -- tmux <-> navigation
