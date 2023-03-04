@@ -1,9 +1,13 @@
 [user]
 	email = charper+git@charper.co.uk
 	name = Chris Harper
+  signingkey = /Users/charper/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/PublicKeys/a774f460161c22e4f4ca14ad51d50a72.pub
 [push]
     default = simple
 [commit]
 	verbose = true
+	gpgsign = true
 [core]
 	editor = nvim
+[gpg]
+	format = ssh

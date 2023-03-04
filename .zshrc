@@ -103,3 +103,4 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+export SSH_AUTH_SOCK=/Users/charper/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
