@@ -1,6 +1,4 @@
--- ln -s ~/.rustup/toolchains/nightly//bin/rust-analyzer
--- ~/.cargo/bin/rust-analyzer
-local indent, width = 2, 80
+local indent, width = 2, 80 
 vim.opt.colorcolumn = tostring(width)                   -- Line 80 ruler
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' } -- Completion options
 vim.opt.cursorline = true                               -- Highlight cursor line
@@ -28,68 +26,59 @@ vim.opt.wildmode = { 'list', 'longest' }                -- Command-line completi
 vim.opt.wrap = false                                    -- Disable line wrap
 
 vim.g.mapleader = ' '
-
-
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({ 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path })
-    vim.cmd.packadd('packer.nvim')
-    return true
-  end
-  return false
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-local packer_bootstrap = ensure_packer()
-
-require('packer').startup(function()
-  local use = require('packer').use
-  -- plugin manager
-  use "wbthomason/packer.nvim";
-
+require('lazy').setup({
+  -- git gutter line
+  'lewis6991/gitsigns.nvim',
+  -- 80 char line mark
+  'lukas-reineke/indent-blankline.nvim',
+  -- tmux <-> navigation
+  'christoomey/vim-tmux-navigator',
   --colorscheme
-  use {
+  {
     "gruvbox-community/gruvbox",
     config = function()
       vim.cmd 'colorscheme gruvbox'
     end
-  }
-
+  },
   -- syntax
-  use {
+  {
     "nvim-treesitter/nvim-treesitter",
-    run = function()
-      local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-      ts_update()
-    end,
     config = function()
       require('nvim-treesitter.configs').setup({ ensure_installed = 'all' })
     end
-  }
+  },
 
   -- fuzzy finder
-  use {
+  {
     'nvim-telescope/telescope.nvim',
-    requires = { 'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope-fzy-native.nvim' },
+    dependencies = { 'nvim-lua/plenary.nvim'}
+  },
+  {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    dependencies = { 'nvim-telescope/telescope.nvim'},
+    build = 'make',
     config = function()
-      require('telescope').setup {
-        extensions = {
-          fzy_native = {
-            override_generic_sorter = false,
-            override_file_sorter = true,
-          }
-        }
-      }
-      require('telescope').load_extension('fzy_native')
-    end
-  }
+      require('telescope').load_extension('fzf')
+    end 
+  },
 
-  use {
+  {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v1.x',
-    requires = {
+    dependencies = {
       -- LSP Support
       { 'neovim/nvim-lspconfig' },             -- Required
       { 'williamboman/mason.nvim' },           -- Optional
@@ -114,44 +103,15 @@ require('packer').startup(function()
         manage_nvim_cmp = true,
         suggest_lsp_servers = false,
       })
+      lsp.nvim_workspace()
+
       lsp.setup()
       vim.diagnostic.config({
         virtual_text = true
       })
     end
-  }
-
-  -- git gutter line
-  use {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-      require('gitsigns').setup()
-    end
-  }
-
-  -- 80 char line mark
-  use 'lukas-reineke/indent-blankline.nvim'
-
-  -- file browser
-  use {
-    'kyazdani42/nvim-tree.lua',
-    requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icons
-    },
-    config = function()
-      require('nvim-tree').setup()
-    end
-  }
-  -- tmux <-> navigation
-  use 'christoomey/vim-tmux-navigator'
-
-  -- packer packer_bootstrap
-  if packer_bootstrap then
-    require('packer').sync()
-  end
-end)
-
-
+  },
+},{})
 
 -- telescope
 vim.api.nvim_set_keymap("n", "<leader>ff", "<Cmd>lua require('telescope.builtin').find_files() <CR>", { noremap = true })
@@ -159,5 +119,3 @@ vim.api.nvim_set_keymap("n", "<leader>fg", "<Cmd>lua require('telescope.builtin'
 vim.api.nvim_set_keymap("n", "<leader>fb", "<Cmd>lua require('telescope.builtin').buffers() <CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>fG", "<Cmd>lua require('telescope.builtin').git_commits() <CR>", { noremap = true })
 
--- nvim-tree
-vim.api.nvim_set_keymap("n", "<leader>t", ':NvimTreeToggle <CR>', { noremap = true })
