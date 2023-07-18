@@ -76,44 +76,55 @@ require('lazy').setup({
       require('telescope').load_extension('fzf')
     end 
   },
-
-  {
-    'VonHeikemen/lsp-zero.nvim',
-    branch = 'v1.x',
-    dependencies = {
-      -- LSP Support
-      { 'neovim/nvim-lspconfig' },             -- Required
-      { 'williamboman/mason.nvim' },           -- Optional
-      { 'williamboman/mason-lspconfig.nvim' }, -- Optional
-
-      -- Autocompletion
-      { 'hrsh7th/nvim-cmp' },         -- Required
-      { 'hrsh7th/cmp-nvim-lsp' },     -- Required
-      { 'hrsh7th/cmp-buffer' },       -- Optional
-      { 'hrsh7th/cmp-path' },         -- Optional
-      { 'saadparwaiz1/cmp_luasnip' }, -- Optional
-      { 'hrsh7th/cmp-nvim-lua' },     -- Optional
-
-      -- Snippets
-      { 'L3MON4D3/LuaSnip' },             -- Required
-      { 'rafamadriz/friendly-snippets' }, -- Optional
+{
+  'VonHeikemen/lsp-zero.nvim',
+  branch = 'v2.x',
+  dependencies = {
+    -- LSP Support
+    {'neovim/nvim-lspconfig'},             -- Required
+    {                                      -- Optional
+      'williamboman/mason.nvim',
+      build = function()
+        pcall(vim.cmd, 'MasonUpdate')
+      end,
     },
-    config = function()
-      local lsp = require('lsp-zero').preset({
-        name = 'recommended',
-        set_lsp_keymaps = true,
-        manage_nvim_cmp = true,
-        suggest_lsp_servers = false,
-      })
-      lsp.nvim_workspace()
+    {'williamboman/mason-lspconfig.nvim'}, -- Optional
 
-      lsp.setup()
-      vim.diagnostic.config({
-        virtual_text = true
-      })
-    end
-  },
+    -- Autocompletion
+    {'hrsh7th/nvim-cmp'},     -- Required
+    {'hrsh7th/cmp-nvim-lsp'}, -- Required
+    {'L3MON4D3/LuaSnip'},     -- Required
+    {'hrsh7th/cmp-buffer'},     -- Optional
+    {'hrsh7th/cmp-path'},     -- Optional
+    {'hrsh7th/cmp-nvim-lsp'},     -- Optional
+  }
+}
+,
 },{})
+
+
+local lsp = require('lsp-zero').preset({})
+
+lsp.on_attach(function(client, bufnr)
+  lsp.default_keymaps({buffer = bufnr})
+end)
+
+lsp.setup()
+
+
+local cmp = require('cmp')
+local cmp_action = require('lsp-zero').cmp_action()
+
+
+cmp.setup({
+  sources = {
+    {name = 'path'},
+    {name = 'nvim_lsp'},
+    {name = 'buffer', keyword_length = 3},
+  },
+  mapping = {
+  }
+})
 
 -- telescope
 vim.api.nvim_set_keymap("n", "<leader>ff", "<Cmd>lua require('telescope.builtin').find_files() <CR>", { noremap = true })
