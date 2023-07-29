@@ -1,5 +1,4 @@
-local indent, width = 2, 80 
-vim.opt.colorcolumn = tostring(width)                   -- Line 80 ruler
+local indent = 2
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' } -- Completion options
 vim.opt.cursorline = true                               -- Highlight cursor line
 vim.opt.expandtab = true                                -- Use spaces instead of tabs
@@ -21,7 +20,6 @@ vim.opt.splitbelow = true                               -- Put new windows below
 vim.opt.splitright = true                               -- Put new windows right of current
 vim.opt.tabstop = indent                                -- Number of spaces tabs count for
 vim.opt.termguicolors = true                            -- True color support
-vim.opt.textwidth = width                               -- Maximum width of text
 vim.opt.wildmode = { 'list', 'longest' }                -- Command-line completion mode
 vim.opt.wrap = false                                    -- Disable line wrap
 
@@ -44,10 +42,6 @@ require('lazy').setup({
   {
   'lewis6991/gitsigns.nvim',opts={}
   },
-  -- 80 char line mark
-  'lukas-reineke/indent-blankline.nvim',
-  -- tmux <-> navigation
-  'christoomey/vim-tmux-navigator',
   --colorscheme
   {
     "gruvbox-community/gruvbox",
@@ -109,11 +103,12 @@ lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
 end)
 
+require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+
 lsp.setup()
 
 
 local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
 
 
 cmp.setup({
